@@ -6,7 +6,7 @@ resource "null_resource" "delay_plan" {
 
   lifecycle {
     # Trigger the delay every time by ignoring any attribute changes
-    ignore_changes = [trigger]
+    ignore_changes = [triggers]
   }
 
   triggers = {
