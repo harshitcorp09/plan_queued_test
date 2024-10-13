@@ -1,6 +1,6 @@
 # main.tf
 
-resource "null_resource" "delay_plan" {
+resource "null_resource" "delay_plan2" {
   provisioner "local-exec" {
     # Use the sleep command to delay the plan for 2 minutes (120 seconds)
     command = "sleep 120"
