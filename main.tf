@@ -1,18 +1,20 @@
 # main.tf
 
-# Define a null data source with a local-exec provisioner
-# This data source will wait during the plan phase
-data "external" "delay_during_plan" {
-  program = ["sh", "-c", "sleep 120 && echo '{\"done\": \"true\"}'"]
-}
-
-# Example usage of the delayed data source
-resource "null_resource" "example" {
-  # The resource triggers the delay data source
-  depends_on = [data.external.delay_during_plan]
-
+resource "null_resource" "delay_plan" {
   provisioner "local-exec" {
-    command = "echo 'Plan completed with delay.'"
+    # Use the sleep command to delay the plan for 2 minutes (120 seconds)
+    command = "sleep 120"
+  }
+
+  lifecycle {
+    # Trigger the delay every time by ignoring any attribute changes
+    ignore_changes = [triggers]
+  }
+
+  triggers = {
+    # Use a timestamp to ensure this resource runs each time
+    time = timestamp()
   }
 }
+
 
